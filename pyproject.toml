@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "guayabita-game"
+version = "0.1.0"
+description = ""
+authors = ["oscar50 <oscar@whaleandjaguar.co>"]
+readme = "README.md"
+packages = [{include = "guayabita_game"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pygame = "^2.5.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
