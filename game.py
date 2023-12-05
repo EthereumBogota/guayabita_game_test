@@ -15,7 +15,7 @@ RED = (255, 0, 0)  # Color del dado (puedes ajustarlo según tu paleta)
 # Tamaño de la pantalla
 WIDTH, HEIGHT = 800, 800
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Juego Retro")
+pygame.display.set_caption("GuayabitaWeb3Game")
 
 # Configurar el reloj
 clock = pygame.time.Clock()
