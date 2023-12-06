@@ -2,18 +2,19 @@ import pygame
 import sys
 import random
 import math
+import numpy as np
 
 # Inicializar Pygame
 pygame.init()
 
-# Definir colores retro
-COLOR1 = (30, 30, 30)  # Color de la mitad izquierda
-COLOR2 = (100, 100, 100)  # Color de la mitad derecha
-WHITE = (255, 255, 255)  # Color blanco para el polígono
-RED = (255, 0, 0)  # Color del dado (puedes ajustarlo según tu paleta)
+POLYGON = (123, 63, 228)  # Color de la mitad izquierda
+AVALANCHE = (232, 65, 66)  # Color de la mitad derecha
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GRAY = (82, 80, 89)
 
 # Tamaño de la pantalla
-WIDTH, HEIGHT = 800, 800
+WIDTH, HEIGHT = 900, 900
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("GuayabitaWeb3Game")
 
@@ -27,13 +28,13 @@ dice_size = int(WIDTH // 5)
 # Número de lados del polígono
 num_sides = 16
 
-# Valor del dado
-dice_value = 1
+# side del dado
+dice_value = random.randint(1, 6)
 
 
 # Función para dibujar el dado
 def draw_dice(surface, value, x, y):
-    pygame.draw.rect(surface, RED, (x, y, dice_size, dice_size))  # Dado
+    pygame.draw.rect(surface, GRAY, (x, y, dice_size, dice_size))  # Dado
     font = pygame.font.Font(None, 36)
     text = font.render(str(value), True, WHITE)
     surface.blit(text, (x + dice_size // 4, y + dice_size // 4))
@@ -50,6 +51,21 @@ def draw_polygon(surface, color, n_sides, radius, center, border=0):
     pygame.draw.polygon(surface, color, points, width=border)
 
 
+def draw_dice_anim(side: int, radius: int = 20, border_height: int = 50):
+    if side in {1, 3, 5}:
+        pygame.draw.circle(screen, BLACK, (WIDTH // 2, HEIGHT // 2), radius)
+    if side in {2, 3, 4, 5, 6}:
+        pygame.draw.circle(screen, BLACK, (WIDTH // 2 - border_height, HEIGHT // 2 - border_height), radius)
+        pygame.draw.circle(screen, BLACK, (WIDTH // 2 + border_height, HEIGHT // 2 + border_height), radius)
+    if side in {4, 5, 6}:
+        pygame.draw.circle(screen, BLACK, (WIDTH // 2 - border_height, HEIGHT // 2 + border_height), radius)
+        pygame.draw.circle(screen, BLACK, (WIDTH // 2 + border_height, HEIGHT // 2 - border_height), radius)
+    if side == 6:
+        pygame.draw.circle(screen, BLACK, (WIDTH // 2 - border_height, HEIGHT // 2), radius)
+        pygame.draw.circle(screen, BLACK, (WIDTH // 2 + border_height, HEIGHT // 2), radius)
+    pygame.display.flip()
+
+
 # Bucle principal del juego
 while True:
     for event in pygame.event.get():
@@ -58,22 +74,21 @@ while True:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                # Cambiar el valor del dado manteniendo el anterior
+                # Cambiar el side del dado manteniendo el anterior
                 dice_value = random.randint(1, 6)
 
     # Dibujar la pantalla dividida
-    pygame.draw.rect(screen, COLOR1, (0, 0, WIDTH // 2, HEIGHT))
-    pygame.draw.rect(screen, COLOR2, (WIDTH // 2, 0, WIDTH // 2, HEIGHT))
+    pygame.draw.rect(screen, POLYGON, (0, 0, WIDTH // 2, HEIGHT))
+    pygame.draw.rect(screen, AVALANCHE, (WIDTH // 2, 0, WIDTH // 2, HEIGHT))
 
-    # Dibujar el polígono blanco en el centro (20% más grande)
-    draw_polygon(screen, WHITE, num_sides, polygon_radius,(WIDTH // 2, HEIGHT // 2), 0)
-    draw_polygon(screen, RED, num_sides, polygon_radius, (WIDTH // 2, HEIGHT // 2), 8)
+    # Dibujar el polígono WHITE en el centro (20% más grande)
+    draw_polygon(screen, WHITE, num_sides, polygon_radius, (WIDTH // 2, HEIGHT // 2), 0)
+    draw_polygon(screen, GRAY, num_sides, polygon_radius, (WIDTH // 2, HEIGHT // 2), 8)
 
     # Dibujar el dado en el polígono
     draw_dice(screen, dice_value, WIDTH // 2 - dice_size // 2, HEIGHT // 2 - dice_size // 2)
 
-    # Actualizar la pantalla
-    pygame.display.flip()
+    draw_dice_anim(side=dice_value)
 
     # Establecer la velocidad del juego
-    clock.tick(5)  # Cambia este valor según lo rápido que quieras que cambie el dado
+    clock.tick(5)  # Cambia este side según lo rápido que quieras que cambie el dado

@@ -9,6 +9,7 @@ packages = [{include = "guayabita_game"}]
 [tool.poetry.dependencies]
 python = "^3.9"
 pygame = "^2.5.2"
+numpy = "^1.26.2"
 
 
 [build-system]
