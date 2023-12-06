@@ -1,4 +1,5 @@
 import pygame
+import pygame_gui
 import sys
 import random
 import math
@@ -25,18 +26,39 @@ clock = pygame.time.Clock()
 polygon_radius = int(WIDTH // 5)
 dice_size = int(WIDTH // 5)
 
-# Número de lados del polígono
 num_sides = 16
 
-# side del dado
 dice_value = random.randint(1, 6)
+
+# Configurar la fuente
+font = pygame.font.Font("C:\\Windows\\Fonts\\OCRAEXT.TTF", 50)  # Aumentar el tamaño de la fuente
+
+pygame.draw.rect(screen, POLYGON, (0, 0, WIDTH // 2, HEIGHT))
+pygame.draw.rect(screen, AVALANCHE, (WIDTH // 2, 0, WIDTH // 2, HEIGHT))
+
+imagen = pygame.image.load('img/logo.png')
+imagen = pygame.transform.scale(imagen, (200, 200))
+
+# Crear el administrador de la interfaz de usuario
+manager = pygame_gui.UIManager((WIDTH, HEIGHT))
+
+# Crear los cuadros de texto
+text_box_1 = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((200, HEIGHT - 70), (200, 50)),
+                                                 manager=manager)
+text_box_2 = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((WIDTH - 410, HEIGHT - 70), (200, 50)),
+                                                 manager=manager)
+
+
+# Función para dibujar texto
+def draw_text(text, x, y, color=WHITE):
+    text_surface = font.render(text, True, color)
+    screen.blit(text_surface, (x, y))
 
 
 # Función para dibujar el dado
-def draw_dice(surface, value, x, y):
+def draw_square(surface, value, x, y):
     pygame.draw.rect(surface, GRAY, (x, y, dice_size, dice_size))  # Dado
-    font = pygame.font.Font(None, 36)
-    text = font.render(str(value), True, WHITE)
+    text = font.render("", True, WHITE)
     surface.blit(text, (x + dice_size // 4, y + dice_size // 4))
 
 
@@ -68,27 +90,40 @@ def draw_dice_anim(side: int, radius: int = 20, border_height: int = 50):
 
 # Bucle principal del juego
 while True:
+    time_delta = clock.tick(60) / 1000.0
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 # Cambiar el side del dado manteniendo el anterior
                 dice_value = random.randint(1, 6)
 
-    # Dibujar la pantalla dividida
-    pygame.draw.rect(screen, POLYGON, (0, 0, WIDTH // 2, HEIGHT))
-    pygame.draw.rect(screen, AVALANCHE, (WIDTH // 2, 0, WIDTH // 2, HEIGHT))
+        manager.process_events(event)
+
+    manager.update(time_delta)
 
     # Dibujar el polígono WHITE en el centro (20% más grande)
     draw_polygon(screen, WHITE, num_sides, polygon_radius, (WIDTH // 2, HEIGHT // 2), 0)
-    draw_polygon(screen, GRAY, num_sides, polygon_radius, (WIDTH // 2, HEIGHT // 2), 8)
+    draw_polygon(screen, GRAY, num_sides, polygon_radius, (WIDTH // 2, HEIGHT // 2), 14)
 
     # Dibujar el dado en el polígono
-    draw_dice(screen, dice_value, WIDTH // 2 - dice_size // 2, HEIGHT // 2 - dice_size // 2)
+    draw_square(screen, dice_value, WIDTH // 2 - dice_size // 2, HEIGHT // 2 - dice_size // 2)
 
     draw_dice_anim(side=dice_value)
 
+    # Dibujar el texto en la parte superior izquierda y derecha
+    draw_text('Polygon', 80, 10, AVALANCHE)
+    draw_text('Avalanch', WIDTH - font.size('Avalanch')[0] - 70, 10, POLYGON)
+    draw_text('Pool: ', WIDTH // 2 - font.size('Pool')[0], 100, GRAY)
+
+    screen.blit(imagen, ((WIDTH - imagen.get_width()) + 10, (HEIGHT - imagen.get_height()) - 10))
+
+    manager.draw_ui(screen)
+
+    print(f"{text_box_1.text}")
+
     # Establecer la velocidad del juego
-    clock.tick(5)  # Cambia este side según lo rápido que quieras que cambie el dado
+    pygame.display.update()
