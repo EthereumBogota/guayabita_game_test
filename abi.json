@@ -1,28 +1,72 @@
-[
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "nuevoSaludo",
-				"type": "string"
-			}
-		],
-		"name": "guardarSaludo",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
+{
+	"compiler": {
+		"version": "0.8.20+commit.a1b79de6"
 	},
-	{
-		"inputs": [],
-		"name": "leerSaludo",
-		"outputs": [
+	"language": "Solidity",
+	"output": {
+		"abi": [
 			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "nuevoSaludo",
+						"type": "string"
+					}
+				],
+				"name": "guardarSaludo",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "leerSaludo",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			}
 		],
-		"stateMutability": "view",
-		"type": "function"
-	}
-]
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Saludo.sol": "MiPrimerContrato"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Saludo.sol": {
+			"keccak256": "0x8e8f28a85722a0e55d9c6779145af6d7a7dc12466465f5613084c4cb3f7c12a4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://26efa7695be59057dfd90716af01bd38892750678da9c3f2e2e6a1d6ad5afe76",
+				"dweb:/ipfs/QmYLaWr2RscH46ZQE9ouH4cYaviXRCjQji9zuyabzAsXKn"
+			]
+		}
+	},
+	"version": 1
+}
