@@ -31,7 +31,8 @@ num_sides = 16
 dice_value = random.randint(1, 6)
 
 # Configurar la fuente
-font = pygame.font.Font("C:\\Windows\\Fonts\\OCRAEXT.TTF", 50)  # Aumentar el tamaño de la fuente
+# font = pygame.font.Font("C:\\Windows\\Fonts\\OCRAEXT.TTF", 50)  # Aumentar el tamaño de la fuente
+font = pygame.font.Font(None, 50)  # Aumentar el tamaño de la fuente
 
 pygame.draw.rect(screen, POLYGON, (0, 0, WIDTH // 2, HEIGHT))
 pygame.draw.rect(screen, AVALANCHE, (WIDTH // 2, 0, WIDTH // 2, HEIGHT))
