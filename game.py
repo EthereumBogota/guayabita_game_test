@@ -4,9 +4,8 @@ import pygame_gui
 import sys
 import random
 import math
-import numpy as np
+from pygame.math import Vector2
 
-# Inicializar Pygame
 pygame.init()
 
 ORIGIN_FONT = os.environ["ORIGIN_FONT"]
@@ -52,6 +51,9 @@ button = pygame_gui.elements.UIButton(relative_rect=button_rect,
                                       text='play!',
                                       manager=manager)
 
+show_win_text = False
+win_text_position = Vector2(85 + title_font.size('hash: ')[0], 60)
+
 
 def draw_text(text, x, y, color=WHITE):
     text_surface = title_font.render(text, True, color)
@@ -63,14 +65,12 @@ def draw_text_small(text, x, y, color=WHITE):
     screen.blit(text_surface, (x, y))
 
 
-# Función para dibujar el dado
 def draw_square(surface, value, x, y):
     pygame.draw.rect(surface, GRAY, (x, y, dice_size, dice_size))  # Dado
     text = title_font.render("", True, WHITE)
     surface.blit(text, (x + dice_size // 4, y + dice_size // 4))
 
 
-# Función para dibujar un polígono regular
 def draw_polygon(surface, color, n_sides, radius, center, border=0):
     points = []
     for i in range(n_sides):
@@ -106,9 +106,9 @@ while True:
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                # Cambiar el side del dado manteniendo el anterior
                 dice_value = random.randint(1, 6)
                 html_text = random.randint(10, 40)
+                show_win_text = (dice_value == 6)
 
         manager.process_events(event)
 
@@ -116,15 +116,21 @@ while True:
     for event in ui_events:
         if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
             if event.ui_element == button:
-                # Cambiar el side del dado al hacer clic en el botón
                 dice_value = random.randint(1, 6)
                 html_text = random.randint(10, 40)
+                show_win_text = (dice_value == 6)
 
     text_box_2 = pygame_gui.elements.UITextBox(str(html_text),
                                                relative_rect=pygame.Rect((WIDTH - 410, HEIGHT - 70),
                                                                          (200, 50)))
 
     manager.update(time_delta)
+
+    if show_win_text:
+        win_text_position.x += 50 * time_delta  # Velocidad del desplazamiento
+        pygame.draw.rect(screen, POLYGON, (0, 0, WIDTH // 2, HEIGHT))
+        pygame.draw.rect(screen, AVALANCHE, (WIDTH // 2, 0, WIDTH // 2, HEIGHT))
+        screen.blit(imagen, ((WIDTH - imagen.get_width()) + 10, (HEIGHT - imagen.get_height()) - 10))
 
     draw_polygon(screen, WHITE, num_sides, polygon_radius, (WIDTH // 2, HEIGHT // 2), 0)
     draw_polygon(screen, GRAY, num_sides, polygon_radius, (WIDTH // 2, HEIGHT // 2), 14)
@@ -140,6 +146,16 @@ while True:
     draw_text_small('hash: ', 80, 60, WHITE)
 
     screen.blit(imagen, ((WIDTH - imagen.get_width()) + 10, (HEIGHT - imagen.get_height()) - 10))
+
+    if show_win_text:
+        win_text_position.x += 50 * time_delta  # Reducir la velocidad de desplazamiento
+        draw_text('You win!', int(win_text_position.x), int(win_text_position.y), WHITE)
+
+        if win_text_position.x > WIDTH - title_font.size('You win!')[0]:
+            win_text_position = Vector2(85 + title_font.size('hash: ')[0], 60)
+            show_win_text = False
+            pygame.draw.rect(screen, POLYGON, (0, 0, WIDTH // 2, HEIGHT))
+            pygame.draw.rect(screen, AVALANCHE, (WIDTH // 2, 0, WIDTH // 2, HEIGHT))
 
     manager.draw_ui(screen)
 
