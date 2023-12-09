@@ -1,12 +1,12 @@
 import os
-import VRF
-import pygame
-import pygame_gui
 import sys
-import random
+import VRF
 import math
-from pygame.math import Vector2
+import pygame
+import random
 import warnings
+import pygame_gui
+from pygame.math import Vector2
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 pygame.init()
@@ -64,22 +64,56 @@ win_text_position = Vector2(WIDTH - title_font.size('you win!')[0] + 20, 60)
 
 
 def draw_text(text, x, y, color=WHITE):
+    """
+    this funtion draw simple text
+    :param text: str, text to render
+    :param x: int, x position
+    :param y: int, y position
+    :param color: tuple, color
+    :return:
+    """
     text_surface = title_font.render(text, True, color)
     screen.blit(text_surface, (x, y))
 
 
 def draw_text_small(text, x, y, color=WHITE):
+    """
+    this funtion draw small text
+    :param text: str, text to render
+    :param x: int, x position
+    :param y: int, y position
+    :param color: tuple, color
+    :return:
+    """
     text_surface = small_font.render(text, True, color)
     screen.blit(text_surface, (x, y))
 
 
 def draw_square(surface, value, x, y):
+    """
+    this function draw dice
+    :param surface:
+    :param value:
+    :param x:
+    :param y:
+    :return:
+    """
     pygame.draw.rect(surface, GRAY, (x, y, dice_size, dice_size))  # Dado
     text = title_font.render("", True, WHITE)
     surface.blit(text, (x + dice_size // 4, y + dice_size // 4))
 
 
 def draw_polygon(surface, color, n_sides, radius, center, border=0):
+    """
+    this funtion create a polygon round dice
+    :param surface:
+    :param color:
+    :param n_sides: int, polygon sides
+    :param radius: int, radius polygon
+    :param center: int, center polygon
+    :param border: int, fill polygon
+    :return:
+    """
     points = []
     for i in range(n_sides):
         angle = 2 * math.pi * i / n_sides
@@ -90,6 +124,13 @@ def draw_polygon(surface, color, n_sides, radius, center, border=0):
 
 
 def draw_dice_anim(side: int, radius: int = 20, border_height: int = 50):
+    """
+    this funtion crea dice animation
+    :param side: int, side
+    :param radius: int, radius dice
+    :param border_height: int
+    :return:
+    """
     if side in {1, 3, 5}:
         pygame.draw.circle(screen, BLACK, (WIDTH // 2, HEIGHT // 2), radius)
     if side in {2, 3, 4, 5, 6}:

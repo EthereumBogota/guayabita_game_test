@@ -3,7 +3,6 @@ import json
 import time
 from web3 import Web3
 
-
 with open("contracts/VRFv2Consumer_abi.json") as f:
     info_json = json.load(f)
 ABI = info_json["output"]["abi"]
@@ -13,7 +12,13 @@ WALLET = os.environ["WALLET"]
 PRIV_KEY = os.environ["PRIV_KEY"]
 
 sepolia_rpc_url = 'https://rpc.sepolia.org/'
+
+
 def oracle_random_number():
+    """
+    this funtion call a random number from chainlink
+    :return:
+    """
     w3 = Web3(Web3.HTTPProvider(sepolia_rpc_url))
 
     if w3.is_connected():
