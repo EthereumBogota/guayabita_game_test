@@ -1,6 +1,6 @@
 # guayabita_game
 
-A Colombian dice game
+A Colombian dice game, bringing fun to save the planet, play Guayabita!
 
 ![](img/logo.png)
 
