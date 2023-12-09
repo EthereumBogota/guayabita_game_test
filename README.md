@@ -2,7 +2,7 @@
 
 A Colombian dice game
 
-![](/home/oscar/GitHub/guayabita_game/img/logo.png)
+![](img/logo.png)
 
 ## VRF contract
 
@@ -10,7 +10,7 @@ VRFv2Consumer test contract: https://sepolia.etherscan.io/address/0x92cd21e4d37c
 
 ## UI
 
-![](/home/oscar/GitHub/guayabita_game/img/ui.png)
+![](img/ui.png)
 
 ## Envoronmet variables
 
