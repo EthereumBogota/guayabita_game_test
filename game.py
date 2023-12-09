@@ -1,10 +1,13 @@
 import os
+import VRF
 import pygame
 import pygame_gui
 import sys
 import random
 import math
 from pygame.math import Vector2
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 pygame.init()
 
@@ -22,7 +25,7 @@ WIDTH, HEIGHT = 900, 900
 
 title_font = pygame.font.Font(ORIGIN_FONT, 50)
 small_font = pygame.font.Font(ORIGIN_FONT, 25)
-input_font = pygame.font.Font(ORIGIN_FONT, 18)
+input_font = pygame.font.Font(ORIGIN_FONT, 10)
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 manager = pygame_gui.UIManager((WIDTH, HEIGHT))
@@ -101,6 +104,10 @@ def draw_dice_anim(side: int, radius: int = 20, border_height: int = 50):
     pygame.display.flip()
 
 
+# create random seed with
+random_seed = VRF.oracle_random_number()
+random.seed(random_seed)
+
 # Bucle principal del juego
 while True:
     time_delta = clock.tick(60) / 1000.0
@@ -156,7 +163,7 @@ while True:
     draw_text('Avalanche', WIDTH - title_font.size('Avalanch')[0] - 100, 10, POLYGON)
     # draw_text('Pool: ', WIDTH // 2 - title_font.size('Pool')[0], 100, GRAY)
 
-    draw_text_small('Demo mode', 80, 60, WHITE)
+    # draw_text_small(f'random seed {random_seed}', 80, 700, WHITE)
 
     screen.blit(imagen, ((WIDTH - imagen.get_width()) + 10, (HEIGHT - imagen.get_height()) - 10))
 
@@ -165,6 +172,7 @@ while True:
         draw_text(f'You win! {html_text}', int(win_text_position.x), int(win_text_position.y), GREEN)
 
         if win_text_position.x < title_font.size('You win!')[0]:
+            html_text = 0
             win_text_position = Vector2(WIDTH - title_font.size('you win!')[0] + 20, 60)
             show_win_text = False
             pygame.draw.rect(screen, POLYGON, (0, 0, WIDTH // 2, HEIGHT))
