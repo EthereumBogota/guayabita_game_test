@@ -2,18 +2,17 @@ import os
 import json
 from web3 import Web3
 
-# with open("contract_abi.json") as archivo:
-#     ABI = json.load(archivo)
-with open("contracts/contract_abi.json") as f:
+
+with open("contracts/VRFv2Consumer_abi.json") as f:
     info_json = json.load(f)
 ABI = info_json["output"]["abi"]
 
-CONTRACT = os.environ["CONTRACT"]
+CONTRACT = os.environ["CONTRACT_VRF"]
 WALLET = os.environ["WALLET"]
 PRIV_KEY = os.environ["PRIV_KEY"]
 
-polygon_rpc_url = 'https://endpoints.omniatech.io/v1/matic/mumbai/public'
-w3 = Web3(Web3.HTTPProvider(polygon_rpc_url))
+sepolia_rpc_url = 'https://rpc.sepolia.org/'
+w3 = Web3(Web3.HTTPProvider(sepolia_rpc_url))
 
 if w3.is_connected():
     print("-" * 50)
@@ -30,8 +29,8 @@ contract = w3.eth.contract(address=contract_address, abi=contract_abi)
 account_address = WALLET
 private_key = PRIV_KEY
 
-result = contract.functions.leerSaludo().call()
-print("Resultado de la consulta:", result)
+result = contract.functions.lastRequestId().call()
+print("lastRequestId:", result)
 
 # # Interactuar con la función guardarSaludo
 # greeting_message = "Saludos desde la casa con Jhonsito"

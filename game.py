@@ -15,6 +15,8 @@ AVALANCHE = (232, 65, 66)  # Color de la mitad derecha
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY = (82, 80, 89)
+BLUE = (76, 109, 243)
+GREEN = (35, 177, 77)
 
 WIDTH, HEIGHT = 900, 900
 
@@ -51,8 +53,11 @@ button = pygame_gui.elements.UIButton(relative_rect=button_rect,
                                       text='play!',
                                       manager=manager)
 
+show_lose_text = False
+lose_text_position = Vector2(title_font.size(f'house wins! {str(text_box_1.text)}')[0] + 10, 60)
+
 show_win_text = False
-win_text_position = Vector2(85 + title_font.size('hash: ')[0], 60)
+win_text_position = Vector2(WIDTH - title_font.size('you win!')[0] + 20, 60)
 
 
 def draw_text(text, x, y, color=WHITE):
@@ -107,7 +112,8 @@ while True:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 dice_value = random.randint(1, 6)
-                html_text = random.randint(10, 40)
+                html_text = random.randint(10, 28)
+                show_lose_text = (dice_value == 1)
                 show_win_text = (dice_value == 6)
 
         manager.process_events(event)
@@ -117,7 +123,8 @@ while True:
         if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
             if event.ui_element == button:
                 dice_value = random.randint(1, 6)
-                html_text = random.randint(10, 40)
+                html_text = random.randint(10, 28)
+                show_lose_text = (dice_value == 1)
                 show_win_text = (dice_value == 6)
 
     text_box_2 = pygame_gui.elements.UITextBox(str(html_text),
@@ -127,7 +134,13 @@ while True:
     manager.update(time_delta)
 
     if show_win_text:
-        win_text_position.x += 50 * time_delta  # Velocidad del desplazamiento
+        win_text_position.x -= 50 * time_delta  # Velocidad del desplazamiento
+        pygame.draw.rect(screen, POLYGON, (0, 0, WIDTH // 2, HEIGHT))
+        pygame.draw.rect(screen, AVALANCHE, (WIDTH // 2, 0, WIDTH // 2, HEIGHT))
+        screen.blit(imagen, ((WIDTH - imagen.get_width()) + 10, (HEIGHT - imagen.get_height()) - 10))
+
+    if show_lose_text:
+        lose_text_position.x += 50 * time_delta  # Velocidad del desplazamiento
         pygame.draw.rect(screen, POLYGON, (0, 0, WIDTH // 2, HEIGHT))
         pygame.draw.rect(screen, AVALANCHE, (WIDTH // 2, 0, WIDTH // 2, HEIGHT))
         screen.blit(imagen, ((WIDTH - imagen.get_width()) + 10, (HEIGHT - imagen.get_height()) - 10))
@@ -140,20 +153,31 @@ while True:
     draw_dice_anim(side=dice_value)
 
     draw_text('Polygon', 80, 10, AVALANCHE)
-    draw_text('Avalanch', WIDTH - title_font.size('Avalanch')[0] - 70, 10, POLYGON)
-    draw_text('Pool: ', WIDTH // 2 - title_font.size('Pool')[0], 100, GRAY)
+    draw_text('Avalanche', WIDTH - title_font.size('Avalanch')[0] - 100, 10, POLYGON)
+    # draw_text('Pool: ', WIDTH // 2 - title_font.size('Pool')[0], 100, GRAY)
 
-    draw_text_small('hash: ', 80, 60, WHITE)
+    draw_text_small('Demo mode', 80, 60, WHITE)
 
     screen.blit(imagen, ((WIDTH - imagen.get_width()) + 10, (HEIGHT - imagen.get_height()) - 10))
 
     if show_win_text:
-        win_text_position.x += 50 * time_delta  # Reducir la velocidad de desplazamiento
-        draw_text('You win!', int(win_text_position.x), int(win_text_position.y), WHITE)
+        win_text_position.x -= 50 * time_delta  # Reducir la velocidad de desplazamiento
+        draw_text(f'You win! {html_text}', int(win_text_position.x), int(win_text_position.y), GREEN)
 
-        if win_text_position.x > WIDTH - title_font.size('You win!')[0]:
-            win_text_position = Vector2(85 + title_font.size('hash: ')[0], 60)
+        if win_text_position.x < title_font.size('You win!')[0]:
+            win_text_position = Vector2(WIDTH - title_font.size('you win!')[0] + 20, 60)
             show_win_text = False
+            pygame.draw.rect(screen, POLYGON, (0, 0, WIDTH // 2, HEIGHT))
+            pygame.draw.rect(screen, AVALANCHE, (WIDTH // 2, 0, WIDTH // 2, HEIGHT))
+
+    if show_lose_text:
+        lose_text_position.x += 50 * time_delta  # Reducir la velocidad de desplazamiento
+        draw_text(f'house wins! {str(text_box_1.text)}', int(lose_text_position.x), int(lose_text_position.y), BLUE)
+
+        if lose_text_position.x > WIDTH - title_font.size(f'house wins! {str(text_box_1.text)}')[0]:
+            text_box_1.set_text('0')
+            lose_text_position = Vector2(title_font.size(f'house wins! {str(text_box_1.text)}')[0] + 10, 60)
+            show_lose_text = False
             pygame.draw.rect(screen, POLYGON, (0, 0, WIDTH // 2, HEIGHT))
             pygame.draw.rect(screen, AVALANCHE, (WIDTH // 2, 0, WIDTH // 2, HEIGHT))
 
