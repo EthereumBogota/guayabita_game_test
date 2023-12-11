@@ -6,8 +6,7 @@ A Colombian dice game, bringing fun to save the planet, play Guayabita!
 
 # Demo video
 
-
-[![Alt text](https://youtu.be/hYZ0yQvOMm4/0.jpg)](https://youtu.be/watch?=hYZ0yQvOMm4)
+[![Alt text](https://img.youtube.com/vi/qnxE1mr4S0s/0.jpg)](https://www.youtube.com/watch?v=qnxE1mr4S0s)
 
 ## VRF contract
 
