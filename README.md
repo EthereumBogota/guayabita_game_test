@@ -28,7 +28,7 @@ https://testnet.snowtrace.io/address/0x97a9ffc045b4a89d0148bded7181f7ec048d05b8
 
 ![](img/ui.png)
 
-## Envoronmet variables
+## Environment variables
 
 * PYTHONUNBUFFERED=1
 * ORIGIN_FONT=Atari_Small.ttf
