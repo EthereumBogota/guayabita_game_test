@@ -29,28 +29,29 @@ contract pagoCrossChain is CCIPReceiver  {
 	event MessageSent(bytes32 messageId);
 
 	constructor(
-        address routerAddressSource,
-        address routerAddressTarget,
+        address _router,
         address linkAddress,
-        uint64 _destinationChainSelector) 
-          CCIPReceiver(routerAddressTarget) {
+        uint64 _destinationChainSelector,
+		address tokenGua) 
+          CCIPReceiver(_router) {
     	owner = msg.sender;    	
-    	router = IRouterClient(routerAddressSource);
+    	router = IRouterClient(_router);
     	linkToken = LinkTokenInterface(linkAddress);
-    	linkToken.approve(routerAddressSource, type(uint256).max);
+    	linkToken.approve(_router, type(uint256).max);
+		token = GuayabitaTk(tokenGua);
 
     	// to Sepolia
     	// https://docs.chain.link/ccip/supported-networks#ethereum-sepolia
     	destinationChainSelector = _destinationChainSelector;
 	}
 
-	function transferOnSepolia(
+	function transferOnChain(
         address destinationAddress,
         address spender,
         uint256 value) external {
     	Client.EVM2AnyMessage memory message = Client.EVM2AnyMessage({
         	receiver: abi.encode(destinationAddress),
-        	data: abi.encodeWithSignature("payment(address,address,uint256,uint256,uint8,bytes32,bytes32)", 
+        	data: abi.encodeWithSignature("mint(address,uint256)", 
 			        spender, value),
         	tokenAmounts: new Client.EVMTokenAmount[](0),
         	extraArgs: Client._argsToBytes(
