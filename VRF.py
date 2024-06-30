@@ -2,6 +2,9 @@ import os
 import json
 import time
 from web3 import Web3
+from dotenv import load_dotenv
+
+load_dotenv()
 
 with open("contracts/VRFv2Consumer_abi.json") as f:
     info_json = json.load(f)
