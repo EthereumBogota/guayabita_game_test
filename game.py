@@ -6,7 +6,11 @@ import pygame
 import random
 import warnings
 import pygame_gui
+from dotenv import load_dotenv
 from pygame.math import Vector2
+
+load_dotenv()
+
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 pygame.init()
