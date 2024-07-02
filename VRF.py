@@ -10,7 +10,8 @@ with open("contracts/VRFv2Consumer_abi.json") as f:
     info_json = json.load(f)
 ABI = info_json["output"]["abi"]
 
-CONTRACT = os.environ["CONTRACT_VRF"]
+# la direccion del contrato debe ser una variable de entorno
+CONTRACT_VRF = "0xC72c60f234bCDFA898faC832833462CCb77C6b75"
 WALLET = os.environ["WALLET"]
 PRIV_KEY = os.environ["PRIV_KEY"]
 
@@ -31,7 +32,7 @@ def oracle_random_number():
     else:
         print("Connection Failed")
 
-    contract_address = CONTRACT
+    contract_address = CONTRACT_VRF
     contract_abi = ABI
     queries = 4
 
@@ -69,7 +70,7 @@ def oracle_random_number():
 
         else:
             print("Processing request")
-            r_number = 137
+            r_number = 24839797740798566204421960018987282271019208905979606455200616560608859319253
             time.sleep(10)
 
     print("VRF random number: ")
