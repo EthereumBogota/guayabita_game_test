@@ -32,5 +32,21 @@ account_address = WALLET
 private_key = PRIV_KEY
 
 result = contract.functions.leerSaludo().call()
-print("Resultado de la consulta:", result)
+
+function_data = contract.functions.guardarSaludo("Hola desde la casa").build_transaction({
+    'from': account_address,
+    'gas': 5000000,
+    'gasPrice': w3.to_wei('10', 'gwei'),
+    'nonce': w3.eth.get_transaction_count(WALLET),
+    'chainId': 421614,
+})
+
+signed_transaction = w3.eth.account.sign_transaction(function_data, private_key)
+transaction_hash = w3.eth.send_raw_transaction(signed_transaction.rawTransaction)
+
+print("Hash send transaction: ", transaction_hash.hex())
+
+result2 = contract.functions.leerSaludo().call()
+
+print("Resultado de la consulta:", result2)
 
