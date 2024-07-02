@@ -3,7 +3,7 @@ pragma solidity ^0.8.20;
 
 contract TestContract {
 
-    string saludo = "Saludos desde Bogota";
+    string saludo = "Saludos desde Colombia";
 
 
     function leerSaludo() public view returns (string memory) {
