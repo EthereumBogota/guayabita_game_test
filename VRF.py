@@ -14,7 +14,7 @@ CONTRACT = os.environ["CONTRACT_VRF"]
 WALLET = os.environ["WALLET"]
 PRIV_KEY = os.environ["PRIV_KEY"]
 
-sepolia_rpc_url = 'https://rpc.sepolia.org/'
+sepolia_rpc_url = 'https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'
 
 
 def oracle_random_number():
@@ -33,7 +33,7 @@ def oracle_random_number():
 
     contract_address = CONTRACT
     contract_abi = ABI
-    queries = 20
+    queries = 4
 
     contract = w3.eth.contract(address=contract_address, abi=contract_abi)
 
@@ -45,7 +45,7 @@ def oracle_random_number():
         'gas': 5000000,
         'gasPrice': w3.to_wei('10', 'gwei'),
         'nonce': w3.eth.get_transaction_count(account_address),
-        'chainId': 11155111,
+        'chainId': 421614,
     })
 
     signed_transaction = w3.eth.account.sign_transaction(function_data, private_key)
@@ -57,20 +57,22 @@ def oracle_random_number():
 
     result = contract.functions.lastRequestId().call()
     print("lastRequestId:", result)
+    r_number = None
 
     for i in range(queries):
         request_status = contract.functions.s_requests(result).call()
         if request_status[0]:
             raw_number = contract.functions.getRequestStatus(result)
+            r_number = raw_number.arguments[0]
             print("Request OK")
             break
 
         else:
             print("Processing request")
-            raw_number = None
+            r_number = 137
             time.sleep(10)
 
     print("VRF random number: ")
-    print(raw_number.arguments[0])
+    print(r_number)
 
-    return raw_number.arguments[0]
+    return r_number

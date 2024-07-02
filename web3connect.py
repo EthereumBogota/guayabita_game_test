@@ -13,7 +13,7 @@ CONTRACT = "0xBC0E70663F0A6B07D6600AfaF2Ca8306Ff1D2811"
 WALLET = os.environ["WALLET"]
 PRIV_KEY = os.environ["PRIV_KEY"]
 
-arbitrum_rpc_url = 'https://sepolia-rollup.arbitrum.io/rpc'
+arbitrum_rpc_url = 'https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'
 w3 = Web3(Web3.HTTPProvider(arbitrum_rpc_url))
 
 if w3.is_connected():

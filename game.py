@@ -204,8 +204,8 @@ while True:
 
     draw_dice_anim(side=dice_value)
 
-    draw_text('Polygon', 80, 10, AVALANCHE)
-    draw_text('Avalanche', WIDTH - title_font.size('Avalanch')[0] - 100, 10, POLYGON)
+    draw_text('You', 80, 10, AVALANCHE)
+    draw_text('Machine', WIDTH - title_font.size('Avalanch')[0] - 100, 10, POLYGON)
     # draw_text('Pool: ', WIDTH // 2 - title_font.size('Pool')[0], 100, GRAY)
 
     # draw_text_small(f'random seed {random_seed}', 80, 700, WHITE)
