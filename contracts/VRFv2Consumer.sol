@@ -39,7 +39,7 @@ contract SubscriptionConsumer is VRFConsumerBaseV2Plus {
     // For a list of available gas lanes on each network,
     // see https://docs.chain.link/docs/vrf/v2-5/supported-networks
     bytes32 public keyHash =
-        0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae;
+        0x1770bdc7eec7771f7ba4ffd640f34260d7f095b79c92d34a5b2551d6f6cfd2be;
 
     // Depends on the number of requested values that you want sent to the
     // fulfillRandomWords() function. Storing each word costs about 20,000 gas,
@@ -47,7 +47,7 @@ contract SubscriptionConsumer is VRFConsumerBaseV2Plus {
     // this limit based on the network that you select, the size of the request,
     // and the processing of the callback request in the fulfillRandomWords()
     // function.
-    uint32 public callbackGasLimit = 100000;
+    uint32 public callbackGasLimit = 500000;
 
     // The default is 3, but you can set this higher.
     uint16 public requestConfirmations = 3;
@@ -62,7 +62,7 @@ contract SubscriptionConsumer is VRFConsumerBaseV2Plus {
      */
     constructor(
         uint256 subscriptionId
-    ) VRFConsumerBaseV2Plus(0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B) {
+    ) VRFConsumerBaseV2Plus(0x5CE8D5A2BC84beb22a398CCA51996F7930313D61) {
         s_subscriptionId = subscriptionId;
     }
 
