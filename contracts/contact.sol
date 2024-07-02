@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-contract MiPrimerContrato {
+contract TestContract {
 
     string saludo = "Saludos desde Bogota";
 
