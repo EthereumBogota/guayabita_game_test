@@ -19,7 +19,7 @@ sepolia_rpc_url = 'https://rpc.sepolia.org/'
 
 def oracle_random_number():
     """
-    this funtion call a random number from chainlink
+    this function call a random number from chainlink
     :return:
     """
     w3 = Web3(Web3.HTTPProvider(sepolia_rpc_url))
@@ -42,7 +42,7 @@ def oracle_random_number():
 
     function_data = contract.functions.requestRandomWords().build_transaction({
         'from': account_address,
-        'gas': 3000000,
+        'gas': 5000000,
         'gasPrice': w3.to_wei('10', 'gwei'),
         'nonce': w3.eth.get_transaction_count(account_address),
         'chainId': 11155111,
@@ -67,6 +67,7 @@ def oracle_random_number():
 
         else:
             print("Processing request")
+            raw_number = None
             time.sleep(10)
 
     print("VRF random number: ")

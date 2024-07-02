@@ -1,19 +1,20 @@
 import os
 import json
 from web3 import Web3
+from dotenv import load_dotenv
 
-# with open("contract_abi.json") as archivo:
-#     ABI = json.load(archivo)
+load_dotenv()
+
 with open("contracts/contract_abi.json") as f:
     info_json = json.load(f)
 ABI = info_json["output"]["abi"]
 
-CONTRACT = os.environ["CONTRACT"]
+CONTRACT = "0xBC0E70663F0A6B07D6600AfaF2Ca8306Ff1D2811"
 WALLET = os.environ["WALLET"]
 PRIV_KEY = os.environ["PRIV_KEY"]
 
-polygon_rpc_url = 'https://endpoints.omniatech.io/v1/matic/mumbai/public'
-w3 = Web3(Web3.HTTPProvider(polygon_rpc_url))
+arbitrum_rpc_url = 'https://sepolia-rollup.arbitrum.io/rpc'
+w3 = Web3(Web3.HTTPProvider(arbitrum_rpc_url))
 
 if w3.is_connected():
     print("-" * 50)
