@@ -11,7 +11,7 @@ with open("contracts/VRFv2Consumer_abi.json") as f:
 ABI = info_json["output"]["abi"]
 
 # la direccion del contrato debe ser una variable de entorno
-CONTRACT_VRF = "0xC72c60f234bCDFA898faC832833462CCb77C6b75"
+CONTRACT_VRF = "0xBc9e27BCE3029F36680Fa3be695DB48C28562427"
 WALLET = os.environ["WALLET"]
 PRIV_KEY = os.environ["PRIV_KEY"]
 
@@ -34,7 +34,7 @@ def oracle_random_number():
 
     contract_address = CONTRACT_VRF
     contract_abi = ABI
-    queries = 4
+    queries = 5
 
     contract = w3.eth.contract(address=contract_address, abi=contract_abi)
 

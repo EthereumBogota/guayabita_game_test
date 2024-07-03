@@ -9,7 +9,7 @@ with open("contracts/contract_abi.json") as f:
     info_json = json.load(f)
 ABI = info_json["output"]["abi"]
 
-CONTRACT = "0xBC0E70663F0A6B07D6600AfaF2Ca8306Ff1D2811"
+CONTRACT = "0x0B5cc2045DF06C1E5356d8F1380c626f6DCFEB40"
 WALLET = os.environ["WALLET"]
 PRIV_KEY = os.environ["PRIV_KEY"]
 
@@ -33,7 +33,7 @@ private_key = PRIV_KEY
 
 result = contract.functions.leerSaludo().call()
 
-function_data = contract.functions.guardarSaludo("Hola desde la casa").build_transaction({
+function_data = contract.functions.guardarSaludo("Hola desde la casa de Oscar").build_transaction({
     'from': account_address,
     'gas': 5000000,
     'gasPrice': w3.to_wei('10', 'gwei'),
